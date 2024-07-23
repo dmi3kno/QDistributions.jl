@@ -6,20 +6,70 @@ julia:
 bibliography: "QDistributions.bib"
 ---
 
+```{julia}
+#| label: setup
+using QDistributions, Plots
+```
+
 # QDistributions.jl
 
 A Julia package for (continuous) quantile distributions and associated functions. Particularly QDistributions implements:
 
-- Quantile function (`quantile`)
-- Quantile density function (`qdf`), density quantile function (`dqf`) and their logarithms (`logqdf` and `logdqf`).
-- Sampling from a distribution 
-- Quantile-based statistics: median, inter-quartile range, robust (Bowley's) skewness, robust (Moors') kurtosis. 
-- Inverse of quantile function (`cdf`), close-form (where available) or approximated by a bracketed rootfinder (otherwise)
-- Probability density function (`pdf`), as a thin wrapper over cdf and dqf
+- Quantile function (`quantile`) and complimentary (non-increasing) quantile function (`cquantile`).
+- Quantile-based statistics: median (`median`), inter-quartile range (`iqr`), robust (Galton-Bowley) skewness (`rskewness`), robust (Moors') kurtosis (`rkurtosis`). 
+- Quantile density function (`qdf`), density quantile function (`dqf`) and its logarithm (`logdqf`).
+- Inverse of quantile function (`cdf`): close-form, where available, or approximated by a bracketed rootfinder, otherwise. Complimentary CDF (survival function) `ccdf`
+- Probability density function (`pdf`), as a thin wrapper over `dqf` and `cdf`; also `logpdf`.
+- Sampling from a distribution (`rand` and `sampler` functions)
+
+Where possible, the following functions are also implemented:
+
+- Pearson moments: `mean`, `var`, `skewness`, `kurtosis` 
+- L-moments: `lmoment`
+- L-coefficient of variance (`lvar`), L-skewness ratio (`lskewness`), L-kurtosis ratio (`lkurtosis`).
 
 ## Generalized Lambda Distribution (CSW parameterization)
 
 Generalilzed Lambda Distribution reparameterized by @chalabi2012FlexibleDistributionModeling (GLD CSW) is a flexible quantile-based distribution with two shape parameters: asymmetry $\chi$ and steepness $\xi$. Besides, it is an IQR-scaled distribution, meaning that its scale parameter $\sigma$ corresponds to the inter-quartile range (IQR).
+
+```{julia}
+#| layout-ncol: 2
+
+d = GLDcsw(1, 5, -0.5, 0.4)
+
+# corner cases
+#d = GLDcsw(1, 5, 0, 0.5) 
+#d = GLDcsw(1, 5, -0.6, (1-0.6)/2)
+#d = GLDcsw(1, 5, -0.6, (1+0.6)/2)
+
+
+#p_grd = ppoints(100)
+p_grd = 0:0.01:1
+
+q_grd = quantile(d, p_grd)
+f_grd = map(Base.Fix1(qdf,d), p_grd)
+dq_grd = map(Base.Fix1(dqf,d), p_grd)
+
+plot(p_grd, q_grd, title="Quantile function", label=string(d))
+
+```
+
+```{julia}
+p_grd_aprx = cdf(d, q_grd)
+
+plot(q_grd, p_grd_aprx, title="Inverse quantile function (CDF)", label=string(d))
+```
+
+
+```{julia}
+plot(p_grd, f_grd, title="Quantile density function", label=string(d))
+```
+
+```{julia}
+plot(q_grd, dq_grd, title="Density Quantile Function", label=string(d))
+```
+
+
 
 ## Flattened Skew-Logistic Distribution (FSLD)
 

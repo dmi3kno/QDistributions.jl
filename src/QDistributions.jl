@@ -16,9 +16,10 @@ import Statistics: quantile
 import SpecialFunctions: zeta
 
 include("FGLD.jl")
+include("GLDcsw.jl")
 include("utils.jl")
 
-export FGLD, 
+export FGLD, GLDcsw,
 sqf, shape, location, scale, asymmetry, steepness, params, partype, 
 cdf, ccdf, pdf, 
 quantile, cquantile, qdf, dqf,

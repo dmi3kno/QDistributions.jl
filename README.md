@@ -5,16 +5,26 @@
 A Julia package for (continuous) quantile distributions and associated
 functions. Particularly QDistributions implements:
 
-- Quantile function (`quantile`)
+- Quantile function (`quantile`) and complimentary (non-increasing)
+  quantile function (`cquantile`).
+- Quantile-based statistics: median (`median`), inter-quartile range
+  (`iqr`), robust (Galton-Bowley) skewness (`rskewness`), robust
+  (Moors’) kurtosis (`rkurtosis`).
 - Quantile density function (`qdf`), density quantile function (`dqf`)
-  and their logarithms (`logqdf` and `logdqf`).
-- Sampling from a distribution
-- Quantile-based statistics: median, inter-quartile range, robust
-  (Bowley’s) skewness, robust (Moors’) kurtosis.
-- Inverse of quantile function (`cdf`), close-form (where available) or
-  approximated by a bracketed rootfinder (otherwise)
-- Probability density function (`pdf`), as a thin wrapper over cdf and
-  dqf
+  and its logarithm (`logdqf`).
+- Inverse of quantile function (`cdf`): close-form, where available, or
+  approximated by a bracketed rootfinder, otherwise. Complimentary CDF
+  (survival function) `ccdf`
+- Probability density function (`pdf`), as a thin wrapper over `dqf` and
+  `cdf`; also `logpdf`.
+- Sampling from a distribution (`rand` and `sampler` functions)
+
+Where possible, the following functions are also implemented:
+
+- Pearson moments: `mean`, `var`, `skewness`, `kurtosis`
+- L-moments: `lmoment`
+- L-coefficient of variance (`lvar`), L-skewness ratio (`lskewness`),
+  L-kurtosis ratio (`lkurtosis`).
 
 ## Generalized Lambda Distribution (CSW parameterization)
 
