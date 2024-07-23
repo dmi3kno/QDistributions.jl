@@ -150,7 +150,7 @@ function cdf(d::GLDcsw, x::Real)
     (insupport(d, x)) || DomainError("Data outside of the distribution support!")
     if (x == GLDcsw_lb(d)) return 0 end
     if (x == GLDcsw_ub(d)) return 1 end
-    Roots.fzero(u -> quantile(d, u)-x, (0, 1), Roots.Brent())
+    fzero(u -> quantile(d, u)-x, (0, 1), Brent())
 end
  
 ccdf(d::GLDcsw, x::Real) = (1-cdf(d, x))

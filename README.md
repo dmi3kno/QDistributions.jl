@@ -1,5 +1,9 @@
 
 
+``` julia
+using QDistributions, Plots
+```
+
 # QDistributions.jl
 
 A Julia package for (continuous) quantile distributions and associated
@@ -34,6 +38,47 @@ two shape parameters: asymmetry $\chi$ and steepness $\xi$. Besides, it
 is an IQR-scaled distribution, meaning that its scale parameter $\sigma$
 corresponds to the inter-quartile range (IQR).
 
+``` julia
+d = GLDcsw(1, 5, -0.5, 0.4)
+
+# corner cases
+#d = GLDcsw(1, 5, 0, 0.5) 
+#d = GLDcsw(1, 5, -0.6, (1-0.6)/2)
+#d = GLDcsw(1, 5, -0.6, (1+0.6)/2)
+
+
+#p_grd = ppoints(100)
+p_grd = 0:0.01:1
+
+q_grd = quantile(d, p_grd)
+f_grd = map(Base.Fix1(qdf,d), p_grd)
+dq_grd = map(Base.Fix1(dqf,d), p_grd)
+
+plot(p_grd, q_grd, title="Quantile function", label=string(d))
+```
+
+![](README_files/figure-commonmark/cell-3-output-1.svg)
+
+``` julia
+p_grd_aprx = cdf(d, q_grd)
+
+plot(q_grd, p_grd_aprx, title="Inverse quantile function (CDF)", label=string(d))
+```
+
+![](README_files/figure-commonmark/cell-4-output-1.svg)
+
+``` julia
+plot(p_grd, f_grd, title="Quantile density function", label=string(d))
+```
+
+![](README_files/figure-commonmark/cell-5-output-1.svg)
+
+``` julia
+plot(q_grd, dq_grd, title="Density Quantile Function", label=string(d))
+```
+
+![](README_files/figure-commonmark/cell-6-output-1.svg)
+
 ## Flattened Skew-Logistic Distribution (FSLD)
 
 One of the most iconic, yet simple quantile-based distributions
@@ -53,7 +98,7 @@ dq_grd = map(Base.Fix1(dqf,dl), p_grd)
 plot(p_grd, q_grd, title="Quantile function", label=string(dl))
 ```
 
-![](README_files/figure-commonmark/cell-2-output-1.svg)
+![](README_files/figure-commonmark/cell-7-output-1.svg)
 
 ``` julia
 
@@ -62,21 +107,21 @@ p_grd_aprx = cdf(dl, q_grd)
 plot(q_grd, p_grd_aprx, title="Inverse quantile function (CDF)", label=string(dl))
 ```
 
-![](README_files/figure-commonmark/cell-3-output-1.svg)
+![](README_files/figure-commonmark/cell-8-output-1.svg)
 
 ``` julia
 
 plot(p_grd, f_grd, title="Quantile density function", label=string(dl))
 ```
 
-![](README_files/figure-commonmark/cell-4-output-1.svg)
+![](README_files/figure-commonmark/cell-9-output-1.svg)
 
 ``` julia
 
 plot(q_grd, dq_grd, title="Density Quantile Function", label=string(dl))
 ```
 
-![](README_files/figure-commonmark/cell-5-output-1.svg)
+![](README_files/figure-commonmark/cell-10-output-1.svg)
 
 ## Contributing
 
