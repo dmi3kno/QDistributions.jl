@@ -1,8 +1,10 @@
 ---
 format: gfm
 engine: julia
+execute:
+  daemon: false
 julia:
-  exeflags: ["--project=."]
+  exeflags: ["--project=@."]
 bibliography: "QDistributions.bib"
 ---
 
