@@ -1,7 +1,7 @@
 name = "QDistributions"
 uuid = "f1a44782-e841-45ef-ab03-da6a859b7770"
-authors = ["Dmytro Perepolkin <dperepolkin@gmail.com>"]
 version = "0.1.0"
+authors = ["Dmytro Perepolkin <dperepolkin@gmail.com>"]
 
 [deps]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
@@ -15,6 +15,7 @@ StatsAPI = "82ae8749-77ed-4fe6-ae5f-f523153014b0"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 
 [compat]
+LogExpFunctions = "1"
 Roots = "2"
 julia = "1"
 
